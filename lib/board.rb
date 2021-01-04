@@ -9,18 +9,32 @@ class Cell
 
 end
 
-def create_board
+class Board
+  attr_accessor :cells
 
-  8.times do |col|
-    8.times do |row|
-      new_cell = Cell.new([col + 1, row + 1])
+  def initialize
+    @cells = []
+    create_board
+  end
+
+  #creates a 8x8 board with 64 cells
+  def create_board
+
+    8.times do |col|
+      8.times do |row|
+        new_cell = Cell.new([col + 1, row + 1])
+        cells.push(new_cell)
+      end
     end
+
+  end
+
+  #return cell with given value
+  def find_cell(value)
+    cells.each { |current_node| return current_node if current_node.value == value}
   end
 
 end
-
-#def Find_cells
-
 
 #def fill_cell
 
