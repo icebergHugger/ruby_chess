@@ -29,15 +29,16 @@ class Board
 
   end
 
+  def fill_cell(location, piece)
+    cell = find_cell(location)
+    cell.piece = piece
+  end
+
   #return cell with given value
   def find_cell(value)
     cells.each { |current_node| return current_node if current_node.value == value}
   end
 
 end
-
-#def fill_cell
-
-
 
 #def set_up
