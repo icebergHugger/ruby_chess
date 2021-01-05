@@ -1,29 +1,16 @@
 
-#Initialize
-
-#Legal_move?
-#Special
-
 class Pawn
+  attr_accessor :player
 
-end
+  def initialize(player)
+    @player = player
+    @first_move = true
+  end
 
-class Bishop
+  def legal_move?(first, last)
+    #player 1: +     player 2: -
+    
 
-end
-
-class Knight
-
-end
-
-class Rook
-
-end
-
-class Queen
-
-end
-
-class King
+  end
 
 end
