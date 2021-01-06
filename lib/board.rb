@@ -1,3 +1,4 @@
+require "./pieces"
 
 class Cell
   attr_accessor :value, :piece
