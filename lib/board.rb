@@ -16,6 +16,7 @@ class Board
   def initialize
     @cells = []
     create_board
+    set_up
   end
 
   #creates a 8x8 board with 64 cells
@@ -40,6 +41,28 @@ class Board
     cells.each { |current_node| return current_node if current_node.value == value}
   end
 
+  def set_up
+    @cells.each do |cell|
+
+      if cell.value[1] == 2
+        cell.piece = Pawn.new(1)
+      end
+
+      if cell.value[1] == 7
+        cell.piece = Pawn.new(2)
+      end
+
+    end
+  end
+
+  def move(start, end)
+
+
+    
+  end
+
 end
 
 #def set_up
+
+Board.new

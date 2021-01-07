@@ -5,7 +5,6 @@ class Pawn
   def initialize(player)
     @player = player
     @first_move = true
-    puts "creted pawn"
   end
 
   def legal_move?(first, last)
