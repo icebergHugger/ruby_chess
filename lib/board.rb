@@ -10,6 +10,16 @@ class Cell
 
 end
 
+class Player
+  attr_accessor :name, :number
+
+  def initialize(name, number)
+    @name = name
+    @number = number
+  end
+
+end
+
 class Board
   attr_accessor :cells
 
@@ -58,11 +68,24 @@ class Board
   def move(start, end)
 
 
-    
+
   end
 
 end
 
-#def set_up
+class Interface
 
-Board.new
+  def start_message
+    puts "Welcome to terminal chess!"
+    puts "The game of pure skill with only one sure winner!"
+    create_players()
+  end
+
+  def create_players
+    puts "Name of player 1: "
+    player1 = Player.new(gets.comp, 1)
+    puts "Name of player 2: "
+    player2 = Player.new(gets.comp, 2)
+  end
+
+end
