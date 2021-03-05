@@ -1,21 +1,39 @@
 require "./pieces"
 
+class Interface
+
+  def initialize
+    start_message
+  end
+
+  def start_message
+    puts "Welcome to terminal chess!"
+    puts "The game of pure skill with only one sure winner!"
+    create_players()
+  end
+
+  def create_players
+    puts "Name of player 1: "
+    num1 = gets.chomp
+    player1 = Player.new(num1, 1)
+    puts "Name of player 2: "
+    num2 = gets.chomp
+    player2 = Player.new(num2, 2)
+    board = Board.new
+  end
+
+  def make_move(player)
+    puts "#{player.name} move."
+  end
+
+end
+
 class Cell
   attr_accessor :value, :piece
 
   def initialize(value, piece=nil)
     @value = value
     @piece = piece
-  end
-
-end
-
-class Player
-  attr_accessor :name, :number
-
-  def initialize(name, number)
-    @name = name
-    @number = number
   end
 
 end
@@ -65,27 +83,56 @@ class Board
     end
   end
 
-  def move(start, end)
+  def move(player, start, final)
+
+    start_cell = find_cell(start)
+
+    if start_cell.piece.player == player
+
+    else
+      #"Move not valid try again" move_message()
+    end
+
+  end
 
 
+end
 
+class Player
+  attr_accessor :name, :number
+
+  def initialize(name, number)
+    @name = name
+    @number = number
   end
 
 end
 
-class Interface
+class Move
 
-  def start_message
-    puts "Welcome to terminal chess!"
-    puts "The game of pure skill with only one sure winner!"
-    create_players()
+  def initialize(start, final, piece, player)
+    @start_cell = start
+    @final_cell = final
+    @piece = piece
+    @player = player
   end
 
-  def create_players
-    puts "Name of player 1: "
-    player1 = Player.new(gets.comp, 1)
-    puts "Name of player 2: "
-    player2 = Player.new(gets.comp, 2)
+  def check_final
+    #check if final cell is optional
+    #if same player return move not possible
+    #else kill(end cell piece)
+
+    #move_piece()
+  end
+
+  def move_piece()
+
+  end
+
+  def end_turn
+    #change player and send back or call visuals
   end
 
 end
+
+game = Interface.new
