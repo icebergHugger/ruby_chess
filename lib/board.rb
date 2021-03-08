@@ -1,32 +1,6 @@
 require "./pieces"
 
-class Interface
 
-  def initialize
-    start_message
-  end
-
-  def start_message
-    puts "Welcome to terminal chess!"
-    puts "The game of pure skill with only one sure winner!"
-    create_players()
-  end
-
-  def create_players
-    puts "Name of player 1: "
-    num1 = gets.chomp
-    player1 = Player.new(num1, 1)
-    puts "Name of player 2: "
-    num2 = gets.chomp
-    player2 = Player.new(num2, 2)
-    board = Board.new
-  end
-
-  def make_move(player)
-    
-  end
-
-end
 
 class Cell
   attr_accessor :value, :piece
@@ -110,7 +84,7 @@ end
 
 class Move
 
-  def initialize(start, final, piece, player)
+  def initialize(start, final, player)
     @start_cell = start
     @final_cell = final
     @piece = piece
@@ -137,6 +111,8 @@ end
 
 class Manager
 
+  @@players = []
+
   def initialize
     @interface = Interface.new
     puts "board and players have been set up"
@@ -144,20 +120,63 @@ class Manager
   end
 
   def game_cycle
-    puts "hi"
+
     @game_won = false
-    current_player = [1, 2].cycle
+    current_player = 1
 
     while @game_won == false do
-      puts "#{current_player}"
-      @interface.make_move(current_player)
+      player = @@players[current_player - 1]
+      @interface.make_move(player)
 
-      current_player = current_player.next
+      current_player = current_player == 1 ? 2 : 1
     end
 
 
   end
 
+  def self.players(array)
+    @@players = array
+  end
+
+
+end
+
+class Interface
+
+  def initialize
+    start_message
+  end
+
+  def start_message
+    puts "Welcome to terminal chess!"
+    puts "The game of pure skill with only one sure winner!"
+    create_players()
+  end
+
+  def create_players
+    puts "Name of player 1: "
+    num1 = gets.chomp
+    player1 = Player.new(num1, 1)
+    puts "Name of player 2: "
+    num2 = gets.chomp
+    player2 = Player.new(num2, 2)
+    Manager.players([player1, player2])
+    board = Board.new
+  end
+
+  def make_move(player)
+    puts "#{player.name}'s turn."
+
+    #Display Board
+
+    #Check if valid
+    puts "Start location:"
+    start = gets.chomp
+    puts "End location:"
+    final = gets.chomp
+
+    move = Move.new(start, final, player)
+  end
 
 end
 
