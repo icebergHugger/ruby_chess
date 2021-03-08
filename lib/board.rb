@@ -23,7 +23,7 @@ class Interface
   end
 
   def make_move(player)
-    puts "#{player.name} move."
+    
   end
 
 end
@@ -135,4 +135,30 @@ class Move
 
 end
 
-game = Interface.new
+class Manager
+
+  def initialize
+    @interface = Interface.new
+    puts "board and players have been set up"
+    game_cycle
+  end
+
+  def game_cycle
+    puts "hi"
+    @game_won = false
+    current_player = [1, 2].cycle
+
+    while @game_won == false do
+      puts "#{current_player}"
+      @interface.make_move(current_player)
+
+      current_player = current_player.next
+    end
+
+
+  end
+
+
+end
+
+game = Manager.new
