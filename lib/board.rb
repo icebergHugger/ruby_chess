@@ -27,7 +27,7 @@ class Board
     8.times do |col|
       8.times do |row|
         new_cell = Cell.new([col + 1, row + 1])
-        cells.push(new_cell)
+        @cells.push(new_cell)
       end
     end
 
@@ -39,8 +39,10 @@ class Board
   end
 
   #return cell with given value
-  def find_cell(value)
-    cells.each { |current_node| return current_node if current_node.value == value}
+  def self.find_cell(value)
+    @cells.each do |current_node|
+      return current_node if current_node.value == value
+    end
   end
 
   def set_up
@@ -55,18 +57,6 @@ class Board
       end
 
     end
-  end
-
-  def move(player, start, final)
-
-    start_cell = find_cell(start)
-
-    if start_cell.piece.player == player
-
-    else
-      #"Move not valid try again" move_message()
-    end
-
   end
 
 
@@ -85,9 +75,8 @@ end
 class Move
 
   def initialize(start, final, player)
-    @start_cell = start
-    @final_cell = final
-    @piece = piece
+    #@start_cell = Board.find_cell(start.split(""))
+    @final_cell = final.split("")
     @player = player
   end
 
@@ -167,7 +156,7 @@ class Interface
   def make_move(player)
     puts "#{player.name}'s turn."
 
-    #Display Board
+    display_board()
 
     #Check if valid
     puts "Start location:"
@@ -176,6 +165,27 @@ class Interface
     final = gets.chomp
 
     move = Move.new(start, final, player)
+  end
+
+  def display_board()
+    pawn = "\u265F"
+
+    puts "---" * 9
+
+    8.times do |index|
+      print " #{(8 - index).to_s} |"
+      print "#{pawn} |" * 7
+      print "#{pawn} |"
+      puts ""
+      puts "---" * 9
+    end
+
+    print "   "
+    ("A".."H").to_a.each do |letter|
+      print " #{letter} "
+    end
+
+    puts ""
   end
 
 end
