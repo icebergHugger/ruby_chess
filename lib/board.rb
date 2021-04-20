@@ -1,13 +1,25 @@
 require "./pieces"
 
+class String
+
+  def colorize(color_code)
+    "\e[#{color_code}m#{self}\e[0m"
+  end
+
+  def green
+    colorize(32)
+  end
+
+end
 
 
 class Cell
-  attr_accessor :value, :piece
+  attr_accessor :value, :piece, :symbol
 
-  def initialize(value, piece=nil)
+  def initialize(value, piece=nil, symbol=" ")
     @value = value
     @piece = piece
+    @symbol = symbol
   end
 
 end
@@ -16,18 +28,22 @@ class Board
   attr_accessor :cells
 
   def initialize
-    @cells = []
+    @@cells = []
     create_board
     set_up
+  end
+
+  def self.cells
+    @@cells
   end
 
   #creates a 8x8 board with 64 cells
   def create_board
 
-    8.times do |col|
-      8.times do |row|
+    8.times do |row|
+      8.times do |col|
         new_cell = Cell.new([col + 1, row + 1])
-        @cells.push(new_cell)
+        @@cells.push(new_cell)
       end
     end
 
@@ -40,20 +56,22 @@ class Board
 
   #return cell with given value
   def self.find_cell(value)
-    @cells.each do |current_node|
+    @@cells.each do |current_node|
       return current_node if current_node.value == value
     end
   end
 
   def set_up
-    @cells.each do |cell|
+    @@cells.each do |cell|
 
       if cell.value[1] == 2
         cell.piece = Pawn.new(1)
+        cell.symbol = "\u265F"
       end
 
       if cell.value[1] == 7
         cell.piece = Pawn.new(2)
+        cell.symbol = "\u2659"
       end
 
     end
@@ -168,24 +186,34 @@ class Interface
   end
 
   def display_board()
-    pawn = "\u265F"
+    cell_array = Board.cells
 
-    puts "---" * 9
+    8.times do |row|
+      puts "   " + "-" * 41
+      print "#{(8 - row).to_s.green}  |"
+      8.times do |col|
 
-    8.times do |index|
-      print " #{(8 - index).to_s} |"
-      print "#{pawn} |" * 7
-      print "#{pawn} |"
+        cell = 0
+
+        cell_array.each do |current|
+          if current.value == [col + 1, 8 - row]
+            cell = current
+          end
+        end
+
+        print " #{cell.symbol}  |"
+
+      end
       puts ""
-      puts "---" * 9
     end
-
-    print "   "
+    puts "   " + "-" * 41
+    print "    "
     ("A".."H").to_a.each do |letter|
-      print " #{letter} "
+      print "  #{letter.green}  "
     end
 
     puts ""
+
   end
 
 end
