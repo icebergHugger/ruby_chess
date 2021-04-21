@@ -176,13 +176,11 @@ class Interface
 
     display_board()
 
-    #Check if valid
-    puts "Start location:"
-    start = gets.chomp
-    puts "End location:"
-    final = gets.chomp
+    get_input()
 
-    move = Move.new(start, final, player)
+
+
+    #move = Move.new(start, final, player)
   end
 
   def display_board()
@@ -214,6 +212,29 @@ class Interface
 
     puts ""
 
+  end
+
+  def get_input
+    puts "Start location:"
+    start = gets.chomp.downcase
+    puts "End location:"
+    final = gets.chomp.downcase
+
+    if valid_input?(start)
+      puts "match"
+    end
+
+  end
+
+  def valid_input?(input)
+    if input.length == 2
+      if (input[0].match? (/[a-h]/)) && (input[1].match? (/[1-8]/))
+        return true
+      end
+    end
+
+
+    return false
   end
 
 end
